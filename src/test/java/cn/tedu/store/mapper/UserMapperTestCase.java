@@ -19,7 +19,7 @@ import java.util.Date;
 public class UserMapperTestCase {
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Test
     public void addnew(){

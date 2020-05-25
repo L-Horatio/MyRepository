@@ -1,4 +1,4 @@
-package cn.tedu.store.srevice;
+package cn.tedu.store.service;
 
 import cn.tedu.store.entity.User;
 import cn.tedu.store.service.exception.DuplicateKeyException;
@@ -17,7 +17,7 @@ public interface IUserService {
 
     /**
      * 用户注册
-     * @param user 用户掉注册信息
+     * @param user 用户的注册信息
      * @return 成功注册的用户数据
      * @throws DuplicateKeyException
      * @throws InsertException
