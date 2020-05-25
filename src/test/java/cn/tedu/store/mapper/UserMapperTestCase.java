@@ -42,7 +42,7 @@ public class UserMapperTestCase {
 
     @Test
     public void findByUserName(){
-        String username = "root";
+        String username = "root1";
         User user = userMapper.findByUsername(username);
         System.err.println(user);
     }
