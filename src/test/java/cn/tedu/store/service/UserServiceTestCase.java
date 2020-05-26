@@ -28,17 +28,12 @@ public class UserServiceTestCase {
         try {
             User user = new User();
             Date now = new Date();
-            user.setUsername("root3");
+            user.setUsername("spring");
             user.setPassword("1234");
             user.setGender(1);
             user.setPhone("13546548546");
             user.setEmail("root@163.com");
             user.setSalt("Hello,MD5!");
-            user.setIsDelete(0);
-            user.setCreatedUser("Admin");
-            user.setModifiedUser("Admin");
-            user.setCreatedTime(now);
-            user.setModifiedTime(now);
             User result = userService.reg(user);
             System.err.println("result=" + result);
         } catch (ServiceException e) {

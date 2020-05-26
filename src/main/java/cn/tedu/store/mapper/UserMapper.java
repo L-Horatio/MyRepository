@@ -21,7 +21,7 @@ public interface UserMapper {
     Integer addnew(User user);
 
     /**
-     * 根据用户名查询用户数据
+     * 根据用户名查询用户数据(为了保证用户名是唯一性)
      * @param username 用户名
      * @return 匹配等用户数据，如果没有，则返回Null
      */
