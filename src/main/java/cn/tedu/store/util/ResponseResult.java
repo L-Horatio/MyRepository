@@ -18,7 +18,7 @@ public class ResponseResult<T> implements Serializable {
 
     private Integer state;
     private String message;
-    private T data;
+    private T data;  //数据  (T为泛型占位符，调用者再确定数据类型)
 
     public ResponseResult() {
     }
