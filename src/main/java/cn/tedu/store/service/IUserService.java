@@ -1,8 +1,7 @@
 package cn.tedu.store.service;
 
 import cn.tedu.store.entity.User;
-import cn.tedu.store.service.exception.DuplicateKeyException;
-import cn.tedu.store.service.exception.InsertException;
+import cn.tedu.store.service.exception.*;
 
 /**
  * @author L-Horatio
@@ -23,5 +22,27 @@ public interface IUserService {
      * @throws InsertException
      */
     User reg(User user) throws DuplicateKeyException, InsertException;
+
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password 密码
+     * @return 返回成功登录的用户数据
+     * @throws UserNotFoundException
+     * @throws PasswordNotMatchException
+     */
+    User login(String username, String password) throws UserNotFoundException, PasswordNotMatchException;
+
+    /**
+     * 修改密码
+     * @param uid 用户id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @throws UserNotFoundException
+     * @throws PasswordNotMatchException
+     * @throws UpdateException
+     * @return
+     */
+    User changePassword(Integer uid, String oldPassword, String newPassword) throws UserNotFoundException, PasswordNotMatchException, UpdateException;
 
 }

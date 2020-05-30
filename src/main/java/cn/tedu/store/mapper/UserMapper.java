@@ -1,6 +1,10 @@
 package cn.tedu.store.mapper;
 
 import cn.tedu.store.entity.User;
+import org.apache.ibatis.annotations.Param;
+
+import javax.websocket.Session;
+import java.util.Date;
 
 /**
  * @author L-Horatio
@@ -26,4 +30,28 @@ public interface UserMapper {
      * @return 匹配等用户数据，如果没有，则返回Null
      */
     User findByUsername(String username);
+
+    /**
+     * 根据id查询数据
+     * @param id 用户id
+     * @return 匹配等用户数据，如果没有，则返回Null
+     */
+    User findById(Integer id);
+
+    /**
+     * 修改密码
+     * @param password 新密码
+     * @param modifiedUser 最后修改人
+     * @param modifiedTime 最后修改时间
+     * @param uid 用户id
+     * @return 受影响的行数
+     */
+    Integer updatePassword(
+            @Param("password") String password,
+            @Param("modifiedUser") String modifiedUser,
+            @Param("modifiedTime") Date modifiedTime,
+            @Param("uid") Integer uid
+    );
+
+
 }

@@ -41,4 +41,31 @@ public class UserServiceTestCase {
             System.err.println("错误描述：" + e.getMessage());
         }
     }
+
+    @Test
+    public void login(){
+        try {
+            String username = "root";
+            String password = "12345";
+            User result = userService.login(username, password);
+            System.err.println("result=" + result);
+        } catch (ServiceException e) {
+            System.err.println("错误类型：" + e.getClass().getName());
+            System.err.println("错误描述：" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void changePassword(){
+        try {
+            Integer uid = 29;
+            String oldPassword = "123456";
+            String newPassword = "1234";
+            User result = userService.changePassword(uid, oldPassword, newPassword);
+            System.err.println("OK!");
+        } catch (ServiceException e) {
+            System.err.println("错误类型：" + e.getClass().getName());
+            System.err.println("错误描述：" + e.getMessage());
+        }
+    }
 }
