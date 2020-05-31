@@ -20,19 +20,25 @@ public class BaseController {
     @ExceptionHandler(ServiceException.class)
     @ResponseBody
     public ResponseResult<Void> handleException (Exception e) {
+
+        Integer state = null;
+
         if (e instanceof DuplicateKeyException) {
             // 400-DuplicateKeyException违反了Unique约束掉异常
-            return new ResponseResult<>(400, e);
+            state = 400;
         } else if (e instanceof UserNotFoundException) {
             // 401-UsernameNotFoundException用户名不存在异常
-            return new ResponseResult<>(401, e);
+            state = 401;
         } else if (e instanceof PasswordNotMatchException) {
             // 402-PasswordNotMatchException密码不匹配异常
-            return new ResponseResult<>(402, e);
+            state = 402;
         } else if (e instanceof InsertException) {
             // 500-InsertException插入数据异常
-            return new ResponseResult<>(500, e);
+            state = 500;
+        } else if (e instanceof UpdateException) {
+            // 501-UpdateException更新数据异常
+            state = 501;
         }
-        return null;
+        return new ResponseResult<>(state, e);
     }
 }
