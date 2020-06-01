@@ -7,7 +7,7 @@ package cn.tedu.store.service.exception;
  */
 
 /**
- * 违反了Unique约束掉异常
+ * 违反了Unique约束的异常
  */
 public class DuplicateKeyException extends ServiceException{
 

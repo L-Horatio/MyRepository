@@ -61,7 +61,23 @@ public class UserServiceTestCase {
             Integer uid = 29;
             String oldPassword = "123456";
             String newPassword = "1234";
-            User result = userService.changePassword(uid, oldPassword, newPassword);
+            userService.changePassword(uid, oldPassword, newPassword);
+            System.err.println("OK!");
+        } catch (ServiceException e) {
+            System.err.println("错误类型：" + e.getClass().getName());
+            System.err.println("错误描述：" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void changeInfo(){
+        try {
+            User user = new User();
+            user.setId(32);
+            user.setPhone("18612324545");
+            user.setEmail("rootw@163.com");
+            user.setGender(0);
+            userService.changeInfo(user);
             System.err.println("OK!");
         } catch (ServiceException e) {
             System.err.println("错误类型：" + e.getClass().getName());

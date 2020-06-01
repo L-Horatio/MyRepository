@@ -128,6 +128,28 @@ public class UserServiceImpl implements IUserService {
         return data;
     }
 
+    @Override
+    public void changeInfo(User user) throws UserNotFoundException, UpdateException {
+        // 根据user.getId()查询用户数据
+        User data = findById(user.getId());
+        // 判断数据是否为null
+        if (data == null) {
+            // 是：抛出UserNotFoundException异常
+            throw new UserNotFoundException("修改资料失败，您尝试访问的用户数据不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        if (data.getIsDelete() == 1) {
+            // 是：抛出UserNotFoundException异常
+            throw new UserNotFoundException("修改资料失败，您尝试访问的用户已经被删除！");
+        }
+        // 向参数对象中封装modified_user,modified_time
+        user.setModifiedTime(new Date());
+        user.setModifiedUser(data.getUsername());
+        // 执行修改：gender,phone,email
+        updateInfo(user);
+    }
+
+
     /*@Override
     public User login(String username, String password) throws UsernameNotFoundException, PasswordNotMatchException {
         // 根据尝试登录的用户名查询数据
@@ -206,7 +228,18 @@ public class UserServiceImpl implements IUserService {
     private void updatePassword(String password, String modifiedUser, Date modifiedTime, Integer uid) {
         Integer rows = userMapper.updatePassword(password, modifiedUser, modifiedTime, uid);
         if (rows != 1) {
-            throw new UpdateException("修改密码错误，出现未知错误！");
+            throw new UpdateException("修改密码失败，出现未知错误！");
+        }
+    }
+
+    /**
+     * 修改个人资料
+     * @param user 用户资料
+     */
+    private void updateInfo(User user){
+        Integer rows = userMapper.updateInfo(user);
+        if(rows != 1) {
+            throw new UpdateException("修改资料失败，出现未知错误！");
         }
     }
 }

@@ -45,4 +45,11 @@ public interface IUserService {
      */
     User changePassword(Integer uid, String oldPassword, String newPassword) throws UserNotFoundException, PasswordNotMatchException, UpdateException;
 
+    /**
+     * 修改用户个人资料
+     * @param user 用户数据
+     * @throws UserNotFoundException
+     * @throws UpdateException
+     */
+    void changeInfo(User user) throws UserNotFoundException, UpdateException;
 }

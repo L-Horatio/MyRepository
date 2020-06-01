@@ -67,7 +67,7 @@ public class UserMapperTestCase {
     @Test
     public void updateInfo() {
         User user = new User();
-        user.setId(4);
+        user.setId(33);
         user.setPhone("18691642354");
         user.setEmail("root@163.com");
         user.setGender(1);
