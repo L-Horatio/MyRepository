@@ -1,208 +1,91 @@
-$(function() {
+/*按加号数量增*/
+function addNum(rid) {
+	var n = parseInt($("#goodsCount"+rid).val());
+	$("#goodsCount"+rid).val(n + 1);
+	calcRow(rid);
+}
+/*按减号数量减*/
+function reduceNum(rid) {
+	var n = parseInt($("#goodsCount"+rid).val());
+	if (n == 0)
+		return;
+	$("#goodsCount"+rid).val(n - 1);
+	calcRow(rid);
+}
+/*全选全不选*/
+function checkall(ckbtn) {
+	$(".ckitem").prop("checked", $(ckbtn).prop("checked"));
+	//calcTotal();
+}
+//删除按钮
+function delCartItem(btn) {
 	
-		if (!$(".imfor")) {
-			$('#section').hide();
-			$('.none').show();
-		}
-	
-	adddel();
-	$('.imfor').each(function(){
-		var price=parseFloat($(this).children('.pices').children('.pices_information').children('span').html());
-		var amount=parseFloat($(this).children('.num').children('input').val());
-		var amountPrice=price*amount;
-		$(this).children('.totle').children('.totle_information').html(amountPrice.toFixed(2));
-	});
-	//全选
-	$(".all").click(function() {
-		amountadd();
-		if($('.all>span').hasClass('normal')){
-			$('.all>span').addClass('true').removeClass('normal');
-			$('.all>span>img').attr('src','../images/cart/product_true.png');
-			$(".Each>span").each(function() {
-				$(this).addClass('true').removeClass('normal');
-				$(this).children('img').attr('src','../images/cart/product_true.png');
-			})
-
-			totl();
-		}else{
-			$('.all>span').addClass('normal').removeClass('true');
-			$('.all>span>img').attr('src','../images/cart/product_normal.png');
-			$('.Each>span').addClass('normal').removeClass('true');
-			$('.Each>span>img').attr('src','../images/cart/product_normal.png');
-			$(".susum").text(0.00);
-			$(".susumOne").text(0.00);
-			$('.total').text(0);
-			$('.totalOne').text(0);
-		}
-	})
-	//单选
-	$('.Each>span').click(function(){
-		amountadd();
-		$('.all>span').addClass('normal').removeClass('true');
-		$('.all>span>img').attr('src','../images/cart/product_normal.png');
-		if($(this).hasClass('normal')){
-			$(this).addClass('true').removeClass('normal');
-			$(this).children('img').attr('src','../images/cart/product_true.png');
-			var amou=parseInt($('.total').text());
-			amou++;
-			$('.total').text(amou);
-			$('.totalOne').text(amou);
-			amountadd();
-		}else{
-			$(this).addClass('normal').removeClass('true');
-			$(this).children('img').attr('src','../images/cart/product_normal.png');
-			var amou=parseInt($('.total').text());
-			amou--;
-			$('.total').text(amou);
-			$('.totalOne').text(amou);
-			var newamo=parseInt($('.susum').text())-parseInt($(this).parent().parent().siblings('.totle').children('.totle_information').text());
-			$('.susum').text(newamo.toFixed(2));
-			$('.susumOne').text(newamo.toFixed(2));
-		}
-	})
-
-
-	//删除当前行
-	$('.del_d').click(function() {
-			var id=$(this).parent().siblings('.pudc').children('.pudc_information').attr('id');
-			console.log(id);
-			$('.modal').fadeIn();
-			$('.no').click(function(){
-				$('.modal').fadeOut();
-			});
-			$('.yes').click(function(){
-				var url ='/delCartItem.html?itemId='+id;
-				 window.location.href=url;
-				})
-	});
-
-	//批量删除
-	$(".foot_del").click(function() {
-		var str=[];
-		$('.Each>span').each(function(){
-			if($(this).hasClass('true')){
-				var id=$(this).parent().parent().next().children('.pudc_information').attr('id');
-				str.push(id);
-
-			}
-		});
-		console.log(str);
-		if(str.length>0){
-			$('.modal').fadeIn();
-			$('.no').click(function(){
-				$('.modal').fadeOut();
-			});
-			$('.yes').click(function(){
-				var url ='/delCartItems.html?&itemIds='+str;
-				 window.location.href=url;
-
-			});
-		}else{
-			$('.modalNo').fadeIn();
-			$('.close').click(function(){
-				$('.modalNo').fadeOut();
-			})
-		}
-	})
-})
-//合计
-function totl() {
-	var sum = 0.00;
-	var amount=0;
-	$(".totle_information").each(function() {
-		sum += parseInt($(this).text());
-		$(".susum").text(sum.toFixed(2));
-		$(".susumOne").text(sum.toFixed(2));
-		amount++;
-		$('.total').text(amount);
-		$('.totalOne').text(amount);
-	})
+	$(btn).parents("tr").remove();
+	//calcTotal();
 }
-// 单独
-function amountadd(){
-	var amo=0;
-	$('.Each>span').each(function(){
-		if($(this).hasClass('true')){
-			amo+=parseInt($(this).parent().parent().siblings('.totle').children('.totle_information').text());
+//批量删除按钮
+function selDelCart() {
+	//遍历所有按钮
+	for (var i = $(".ckitem").length - 1; i >= 0; i--) {
+		//如果选中
+		if ($(".ckitem")[i].checked) {
+			//删除
+			$($(".ckitem")[i]).parents("tr").remove();
 		}
-	})
-	$('.susum').text(amo.toFixed(2));
-	$('.susumOne').text(amo.toFixed(2));
-}
-
-function adddel(){
-	//小计和加减
-	//加
-	$(".add").each(function() {
-		$(this).click(function() {
-			var $multi = 0;
-			var vall = $(this).prev().val();
-			vall++;
-			$(this).prev().val(vall);
-			$multi = (parseInt(vall).toFixed(2) * parseInt($(this).parent().prev().children().eq(1).children().eq(1).text()));
-			$(this).parent().next().children().eq(1).text(Math.round($multi).toFixed(2));
-			amountadd();
-			var id=$(this).parent().siblings('.pudc').children('.pudc_information').attr('id');
-			var num=$(this).prev().val();
-			$.ajax({
-				type: "GET",
-				url: "/changeCartNum.html",
-				data: {itemId:id,num:num},
-				success: function(data){
-				}
-			});
-		})
-	})
-	//减
-	$(".reduc").each(function() {
-		$(this).click(function() {
-			var $multi1 = 0;
-			var vall1 = $(this).next().val();
-			vall1--;
-			if(vall1 <= 0) {
-				vall1 = 1;
-			}
-			$(this).next().val(vall1);
-			$multi1 = parseInt(vall1) * parseInt($(this).parent().prev().children().eq(1).children().eq(1).text());
-			$(this).parent().next().children().eq(1).text(Math.round($multi1).toFixed(2));
-			amountadd();
-			var id=$(this).parent().siblings('.pudc').children('.pudc_information').attr('id');
-			var num=$(this).next().val();
-			$.ajax({
-				type: "GET",
-				url: "/changeCartNum.html",
-				data: {itemId:id,num:num},
-				success: function(data){
-
-				}
-			});
-		})
-	})
-}
-
-//去结算
-var str=[];
-var totalPrice=0;
-$('.foot_cash').click(function(){
-	$('.Each>span').each(function(){
-		if($(this).hasClass('true')){
-			var id=$(this).parent().parent().next().children('.pudc_information').attr('id');
-			var num=$(this).parent().parent().siblings('.num').children('input').val();
-			//str.push(id);
-		}
-	});
-	totalPrice=$('.susumOne').html();
-	console.log(totalPrice);
-	console.log(str);
-	if(str.length>0){
-		var url = '/CartToOrder.html?itemIds='+str;
-		 window.location.href = url;
-	}else{
-		$('.modalBalance').fadeIn();
-		$('.close').click(function(){
-			$('.modalBalance').fadeOut();
-		})
 	}
-
+	//calcTotal();
+}
+$(function() {
+	//单选一个也得算价格
+	$(".ckitem").click(function() {
+			//calcTotal();
+		})
+		//开始时计算价格
+		//calcTotal();
 })
+//计算单行小计价格的方法
+function calcRow(rid) {
+	//取单价
+	var vprice = parseFloat($("#goodsPrice"+rid).html());
+	//取数量
+	var vnum = parseFloat($("#goodsCount"+rid).val());
+	//小计金额
+	var vtotal = vprice * vnum;
+	//赋值
+	$("#goodsCast"+rid).html("¥" + vtotal);
+}
+//计算总价格的方法
+/*
+function calcTotal() {
+	//选中商品的数量
+	var vselectCount = 0;
+	//选中商品的总价
+	var vselectTotal = 0;
 
+	//循环遍历所有tr
+	for (var i = 0; i < $(".cart-body tr").length; i++) {
+		//计算每个商品的价格小计开始
+		//取出1行
+		var $tr = $($(".cart-body tr")[i]);
+		//取单价
+		var vprice = parseFloat($tr.children(":eq(3)").children("span").html());
+		//取数量
+		var vnum = parseFloat($tr.children(":eq(4)").children(".num-text").val());
+		//小计金额
+		var vtotal = vprice * vnum;
+		//赋值
+		$tr.children(":eq(5)").children("span").html("¥" + vtotal);
+		//计算每个商品的价格小计结束
+
+		//检查是否选中
+		if ($tr.children(":eq(0)").children(".ckitem").prop("checked")) {
+			//计数
+			vselectCount++;
+			//计总价
+			vselectTotal += vtotal;
+		}
+		//将选中的数量和价格赋值
+		$("#selectTotal").html(vselectTotal);
+		$("#selectCount").html(vselectCount);
+	}
+}*/
