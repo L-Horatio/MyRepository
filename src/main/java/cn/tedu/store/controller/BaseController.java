@@ -5,6 +5,8 @@ import cn.tedu.store.util.ResponseResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author L-Horatio
  * @date 2020/5/26
@@ -40,5 +42,14 @@ public class BaseController {
             state = 501;
         }
         return new ResponseResult<>(state, e);
+    }
+
+    /**
+     * 获取Session中的uid
+     * @param session
+     * @return
+     */
+    protected Integer getUidFromSession(HttpSession session) {
+        return Integer.valueOf(session.getAttribute("uid").toString());
     }
 }

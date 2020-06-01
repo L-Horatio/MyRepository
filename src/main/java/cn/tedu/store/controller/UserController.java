@@ -40,14 +40,14 @@ public class UserController extends BaseController{
         return new ResponseResult<Void>(SUCCESS);
     }
 
-    @PostMapping("/password.do")
+    @RequestMapping("/password.do")
     public ResponseResult<Void> changePassword(
             HttpSession session,
             @RequestParam("old_password") String oldPassword,
             @RequestParam("new_password") String newPassword
             ) {
         // 获取当前登陆的用户的id
-        Integer uid = Integer.valueOf(session.getAttribute("uid").toString());
+        Integer uid = getUidFromSession(session);
         // 执行修改密码
         userService.changePassword(uid, oldPassword, newPassword);
         // 返回结果
