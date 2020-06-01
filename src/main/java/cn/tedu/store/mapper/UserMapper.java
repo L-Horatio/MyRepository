@@ -53,5 +53,10 @@ public interface UserMapper {
             @Param("uid") Integer uid
     );
 
-
+    /**
+     * 修改用户资料(不含用户名，密码和头像)
+     * @param user 用户数据
+     * @return 受影响的行数
+     */
+    Integer updateInfo(User user);
 }

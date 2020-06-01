@@ -41,7 +41,7 @@
     <!--User findById(Integer id);-->
     <select id="findById" resultType="cn.tedu.store.entity.User">
         SELECT
-            password, salt, is_delete isDelete, username
+            username, password, phone, email, gender, salt, is_delete isDelete
         FROM
             t_user
         WHERE
@@ -63,5 +63,29 @@
             modified_time=#{modifiedTime}
         WHERE
             id=#{uid}
+    </update>
+
+    <!--修改用户资料(不含用户名，密码和头像)-->
+    <!--Integer updateInfo(User user);-->
+    <update id="updateInfo">
+        UPDATE
+            t_user
+        SET
+            <if test="phone != null">
+                phone=#{phone},
+            </if>
+
+            <if test="gender != null">
+                gender=#{gender},
+            </if>
+
+            <if test="email != null">
+                email=#{email},
+            </if>
+
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE
+            id=#{id}
     </update>
 </mapper>
