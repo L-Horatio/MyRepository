@@ -54,4 +54,26 @@ public class UserController extends BaseController{
         // 返回结果
         return new ResponseResult<Void>(SUCCESS);
     }
+
+    @RequestMapping("/info.do")
+    public ResponseResult<User> getInfo(HttpSession session) {
+        // 获取当前登录用户的id
+        Integer id = getUidFromSession(session);
+        // 执行查询，获取用户数据
+        User user = userService.getById(id);
+        // 返回
+        return new ResponseResult<User>(SUCCESS, user);
+    }
+
+    @PostMapping("/change_info.do")
+    public ResponseResult<Void> changeInfo(HttpSession session, User user) {
+        // 获取当前登录用户的id
+        Integer id = getUidFromSession(session);
+        // 将id封装的参数user中，因为user是用户提交的，不包含id
+        user.setId(id);
+        // 执行修改
+        userService.changeInfo(user);
+        // 返回
+        return new ResponseResult<Void>(SUCCESS);
+    }
 }

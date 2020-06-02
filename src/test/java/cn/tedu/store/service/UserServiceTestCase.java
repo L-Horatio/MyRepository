@@ -28,7 +28,7 @@ public class UserServiceTestCase {
         try {
             User user = new User();
             Date now = new Date();
-            user.setUsername("spring4");
+            user.setUsername("spring456");
             user.setPassword("1234");
             user.setGender(1);
             user.setPhone("13546548546");

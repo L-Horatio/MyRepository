@@ -52,4 +52,11 @@ public interface IUserService {
      * @throws UpdateException
      */
     void changeInfo(User user) throws UserNotFoundException, UpdateException;
+
+    /**
+     * 根据id获取用户数据
+     * @param id 用户id
+     * @return 匹配的用户数据，没有就返回null
+     */
+    User getById(Integer id) throws UserNotFoundException, UpdateException;
 }

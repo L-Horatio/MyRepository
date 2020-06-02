@@ -29,8 +29,8 @@ public class WebAppConfigurer implements WebMvcConfigurer {
 
         // 白名单
         List<String> excludePathPatterns = new ArrayList<>();
-        excludePathPatterns.add("/reg.do");
-        excludePathPatterns.add("/login.do");
+        excludePathPatterns.add("/user/reg.do");
+        excludePathPatterns.add("/user/login.do");
 
         // 注册
         registry.addInterceptor(new LoginInterceptor())

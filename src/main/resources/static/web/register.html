@@ -33,7 +33,7 @@
 			<div class="regDiv">
 				<p>新用户注册</p>
 				<!--表单开始-->
-				<form id="form-reg"  class="form-horizontal" role="form">
+				<form  id="form-reg" class="form-horizontal" role="form">
 					<!--用户名-->
 					<div class="form-group">
 						<label  class="col-md-3 control-label">名字：</label>
@@ -139,11 +139,9 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
-			// 为注册按钮绑定单击事件
+			// 为注册绑定单击事件
 			$("#btn-reg").click(function () {
 				// 将请求提交到哪里
-				// 当前位置：web/register.html
-				// 目标位置：user/reg.do
 				var url = "../user/reg.do";
 				// 请求参数
 				var data = $("#form-reg").serialize();
@@ -156,11 +154,10 @@
 					"dataType": "json",
 					"success": function (json) {
 						if (json.state == 200) {
-							alert("注册成功！");
-						} else {
+							alert("注册成功！")
+						} else  {
 							alert(json.message);
 						}
-
 					}
 				});
 			});
