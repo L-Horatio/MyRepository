@@ -88,4 +88,20 @@
         WHERE
             id=#{id}
     </update>
+
+    <!--修改头像-->
+    <!--Integer updateAvatar(
+            @Param("uid") Integer uid,
+            @Param("avatar") String avatar,
+            @Param("modifiedUser") String modifiedUser,
+            @Param("modifiedTime") Date modifiedTime);-->
+    <update id="updateAvatar">
+        UPDATE
+            t_user
+        SET
+            avatar=#{avatar}, modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE
+            id=#{uid}
+    </update>
 </mapper>

@@ -150,6 +150,26 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public void changeAvatar(Integer uid, String avatar) throws UserNotFoundException, UpdateException {
+        // 根据uid查询用户数据
+        User data = findById(uid);
+        // 判断数据是否为null
+        if (data == null) {
+            // 是：抛出UserNotFoundException异常
+            throw new UserNotFoundException("修改头像失败，您尝试访问的用户数据不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        if (data.getIsDelete() == 1) {
+            // 是：抛出UserNotFoundException异常
+            throw new UserNotFoundException("修改头像失败，您尝试访问的用户已经被删除！");
+        }
+        // 执行更新头像
+        String modifiedUser = data.getUsername();
+        Date modifiedTime = new Date();
+        updateAvaar(avatar, modifiedUser, modifiedTime, uid);
+    }
+
+    @Override
     public User getById(Integer id) {
         User user = findById(id);
         user.setPassword(null);
@@ -237,6 +257,21 @@ public class UserServiceImpl implements IUserService {
         Integer rows = userMapper.updatePassword(password, modifiedUser, modifiedTime, uid);
         if (rows != 1) {
             throw new UpdateException("修改密码失败，出现未知错误！");
+        }
+    }
+
+    /**
+     * 修改头像
+     * @param avatar 新头像路径
+     * @param modifiedUser 最后修改人
+     * @param modifiedTime 最后修改时间
+     * @param uid 用户id
+     * @return 受影响的行数
+     */
+    private void updateAvaar(String avatar, String modifiedUser, Date modifiedTime, Integer uid) {
+        Integer rows = userMapper.updateAvatar(uid, avatar, modifiedUser, modifiedTime);
+        if (rows != 1) {
+            throw new UpdateException("更新头像失败，出现未知错误！");
         }
     }
 

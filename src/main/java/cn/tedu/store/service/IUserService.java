@@ -54,6 +54,15 @@ public interface IUserService {
     void changeInfo(User user) throws UserNotFoundException, UpdateException;
 
     /**
+     * 修改头像
+     * @param uid 用户id
+     * @param avatar 头像路径
+     * @throws UserNotFoundException
+     * @throws UpdateException
+     */
+    void changeAvatar(Integer uid, String avatar) throws UserNotFoundException, UpdateException;
+
+    /**
      * 根据id获取用户数据
      * @param id 用户id
      * @return 匹配的用户数据，没有就返回null

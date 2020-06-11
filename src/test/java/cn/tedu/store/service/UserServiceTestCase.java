@@ -70,6 +70,19 @@ public class UserServiceTestCase {
     }
 
     @Test
+    public void changeAvatar(){
+        try {
+            Integer uid = 31;
+            String avatar = "upload/52546642134.jpg";
+            userService.changeAvatar(uid, avatar);
+            System.err.println("OK!");
+        } catch (ServiceException e) {
+            System.err.println("错误类型：" + e.getClass().getName());
+            System.err.println("错误描述：" + e.getMessage());
+        }
+    }
+
+    @Test
     public void changeInfo(){
         try {
             User user = new User();

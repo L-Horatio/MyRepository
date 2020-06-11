@@ -76,4 +76,14 @@ public class UserMapperTestCase {
         Integer rows = userMapper.updateInfo(user);
         System.err.println("rows=" + rows);
     }
+
+    @Test
+    public void updateAvatar() {
+        Integer uid = 30;
+        String avatar = "4654564.jpg";
+        String modifiedUser = "Admin";
+        Date modifiedTime = new Date();
+        Integer rows = userMapper.updateAvatar(uid, avatar, modifiedUser, modifiedTime);
+        System.err.println("rows=" + rows);
+    }
 }

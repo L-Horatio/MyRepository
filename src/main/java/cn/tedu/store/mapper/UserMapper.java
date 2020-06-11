@@ -59,4 +59,18 @@ public interface UserMapper {
      * @return 受影响的行数
      */
     Integer updateInfo(User user);
+
+    /**
+     * 修改头像
+     * @param uid 用户id
+     * @param avatar
+     * @param modifiedUser
+     * @param modifiedTime
+     * @return
+     */
+    Integer updateAvatar(
+            @Param("uid") Integer uid,
+            @Param("avatar") String avatar,
+            @Param("modifiedUser") String modifiedUser,
+            @Param("modifiedTime") Date modifiedTime);
 }

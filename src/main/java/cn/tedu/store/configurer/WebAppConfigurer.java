@@ -26,11 +26,14 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         // 黑名单
         List<String> pathPatterns = new ArrayList<>();
         pathPatterns.add("/user/**");
+        pathPatterns.add("/web/**");
 
         // 白名单
         List<String> excludePathPatterns = new ArrayList<>();
         excludePathPatterns.add("/user/reg.do");
         excludePathPatterns.add("/user/login.do");
+        excludePathPatterns.add("/web/register.html");
+        excludePathPatterns.add("/web/login.html");
 
         // 注册
         registry.addInterceptor(new LoginInterceptor())
