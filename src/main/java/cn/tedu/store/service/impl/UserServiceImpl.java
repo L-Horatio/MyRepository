@@ -171,11 +171,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User getById(Integer id) {
-        User user = findById(id);
-        user.setPassword(null);
-        user.setSalt(null);
-        user.setIsDelete(null);
-        return user;
+        User data = findById(id);
+        data.setPassword(null);
+        data.setSalt(null);
+        data.setIsDelete(null);
+        return data;
     }
 
     /*@Override
@@ -239,7 +239,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * 根据id查询数据
      * @param id 用户id
-     * @return 匹配的用户数据，如果没有，则返回Null
+     * @return 匹配等用户数据，如果没有，则返回Null
      */
     private User findById(Integer id) {
         return userMapper.findById(id);

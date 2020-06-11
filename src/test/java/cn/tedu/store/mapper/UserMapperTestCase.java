@@ -42,24 +42,24 @@ public class UserMapperTestCase {
 
     @Test
     public void findByUserName(){
-        String username = "root1";
+        String username = "root";
         User user = userMapper.findByUsername(username);
         System.err.println(user);
     }
 
     @Test
     public void findById(){
-        Integer id = 30;
+        Integer id = 5;
         User user = userMapper.findById(id);
         System.err.println(user);
     }
 
     @Test
     public void updatePassword() {
-        String password = "1234";
+        String password = "123456";
         String modifiedUser = "admin";
         Date modifiedTime = new Date();
-        Integer uid = 27;
+        Integer uid = 6;
         Integer rows = userMapper.updatePassword(password, modifiedUser, modifiedTime, uid);
         System.err.println("rows=" + rows);
     }

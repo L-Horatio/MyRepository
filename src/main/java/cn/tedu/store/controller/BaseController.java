@@ -1,5 +1,6 @@
 package cn.tedu.store.controller;
 
+import cn.tedu.store.controller.exception.*;
 import cn.tedu.store.service.exception.*;
 import cn.tedu.store.util.ResponseResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +20,7 @@ public class BaseController {
      */
     public static final Integer SUCCESS = 200;
 
-    @ExceptionHandler(ServiceException.class)
+    @ExceptionHandler({ServiceException.class, RequestException.class})
     @ResponseBody
     public ResponseResult<Void> handleException (Exception e) {
 
@@ -40,6 +41,18 @@ public class BaseController {
         } else if (e instanceof UpdateException) {
             // 501-UpdateException更新数据异常
             state = 501;
+        } else if (e instanceof FileEmptyException) {
+            // 600-FileEmptyException上传文件为空异常
+            state = 600;
+        } else if (e instanceof FileSizeOutOfLimitException) {
+            // 601-FileSizeOutOfLimitException上传文件大小超出限制异常
+            state  = 601;
+        } else if (e instanceof FileTypeNotSupportException) {
+            // 602-FileTypeNotSupportException上传的文件类型不匹配异常
+            state  = 602;
+        } else if (e instanceof FileUploadException) {
+            // 610-FileUploadException文件上传异常
+            state  = 610;
         }
         return new ResponseResult<>(state, e);
     }

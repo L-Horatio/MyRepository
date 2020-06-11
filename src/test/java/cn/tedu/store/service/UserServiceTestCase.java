@@ -45,8 +45,8 @@ public class UserServiceTestCase {
     @Test
     public void login(){
         try {
-            String username = "root";
-            String password = "12345";
+            String username = "spring4";
+            String password = "1234";
             User result = userService.login(username, password);
             System.err.println("result=" + result);
         } catch (ServiceException e) {

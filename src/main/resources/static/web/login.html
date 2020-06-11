@@ -144,9 +144,11 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
-			// 为登录绑定单击事件
+			// 为登录按钮绑定单击事件
 			$("#btn-login").click(function () {
 				// 将请求提交到哪里
+				// 当前位置：web/login.html
+				// 目标位置：user/login.do
 				var url = "../user/login.do";
 				// 请求参数
 				var data = $("#form-login").serialize();
@@ -159,10 +161,15 @@
 					"dataType": "json",
 					"success": function (json) {
 						if (json.state == 200) {
-							alert("登录成功！")
-						} else  {
+							alert("登录成功！");
+							$.cookie("avatar", json.data.avatar, {
+								expires: 7
+							});
+							console.log("登陆成功，将头像存入到Cookie：" + $.cookie("avatar"));
+						} else {
 							alert(json.message);
 						}
+
 					}
 				});
 			});

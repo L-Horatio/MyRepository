@@ -139,14 +139,9 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
-			// 为注册绑定单击事件
 			$("#btn-reg").click(function () {
-				// 将请求提交到哪里
 				var url = "../user/reg.do";
-				// 请求参数
 				var data = $("#form-reg").serialize();
-				console.log("注册参数：" + data);
-				// 发出ajax请求，并处理结果
 				$.ajax({
 					"url": url,
 					"data": data,
@@ -155,7 +150,7 @@
 					"success": function (json) {
 						if (json.state == 200) {
 							alert("注册成功！")
-						} else  {
+						} else {
 							alert(json.message);
 						}
 					}

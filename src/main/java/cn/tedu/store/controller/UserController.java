@@ -1,5 +1,8 @@
 package cn.tedu.store.controller;
 
+import cn.tedu.store.controller.exception.FileEmptyException;
+import cn.tedu.store.controller.exception.FileSizeOutOfLimitException;
+import cn.tedu.store.controller.exception.FileTypeNotSupportException;
 import cn.tedu.store.entity.User;
 import cn.tedu.store.service.IUserService;
 import cn.tedu.store.util.ResponseResult;
@@ -57,7 +60,7 @@ public class UserController extends BaseController{
     }
 
     @PostMapping("/login.do")
-    public ResponseResult<Void> handleLogin(
+    public ResponseResult<User> handleLogin(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             HttpSession session) {
@@ -67,7 +70,7 @@ public class UserController extends BaseController{
         session.setAttribute("uid", user.getId());
         session.setAttribute("username", user.getUsername());
         // 返回结果
-        return new ResponseResult<Void>(SUCCESS);
+        return new ResponseResult<>(SUCCESS, user);
     }
 
     @RequestMapping("/password.do")
@@ -82,16 +85,6 @@ public class UserController extends BaseController{
         userService.changePassword(uid, oldPassword, newPassword);
         // 返回结果
         return new ResponseResult<Void>(SUCCESS);
-    }
-
-    @RequestMapping("/info.do")
-    public ResponseResult<User> getInfo(HttpSession session) {
-        // 获取当前登录用户的id
-        Integer id = getUidFromSession(session);
-        // 执行查询，获取用户数据
-        User user = userService.getById(id);
-        // 返回
-        return new ResponseResult<User>(SUCCESS, user);
     }
 
     @PostMapping("/change_info.do")
@@ -113,15 +106,17 @@ public class UserController extends BaseController{
         // 检查是否存在上传文件 > file.isEmpty()
         if (file.isEmpty()) {
             // 抛出异常，文件不能为空
-
+            throw new FileEmptyException("上传失败！没有选择上传的文件，或选中的文件为空！");
         }
         // 检查文件类型 > file.getSize()
         if (file.getSize() > FILE_MAX_SIZE) {
             // 抛出异常，文件大小超出限制
+            throw new FileSizeOutOfLimitException("上传失败！上传的文件大小超出限制！");
         }
         // 检查文件大小 > file.getContentType()
         if (!FILE_CONTENT_TYPES.contains(file.getContentType())) {
             // 抛出异常，文件类型限制
+            throw new FileTypeNotSupportException("上传失败！上传的文件类型不匹配！");
         }
         // 确定上传文件夹的路径 > session.getServletContext.getRealPath()
         String parentPath = session.getServletContext().getRealPath(UPLOAD_DIR_NAME);
@@ -140,8 +135,12 @@ public class UserController extends BaseController{
         try {
             file.transferTo(dest);
             System.err.println("上传完成！");
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            // 抛出异常：上传失败
         } catch (IOException e) {
             e.printStackTrace();
+            // 抛出异常：上传失败
         }
         // 获取当前用户的Id
         Integer uid = getUidFromSession(session);
@@ -153,5 +152,15 @@ public class UserController extends BaseController{
         rr.setState(SUCCESS);
         rr.setData(UPLOAD_DIR_NAME + "/" + fileName);
         return rr;
+    }
+
+    @RequestMapping("/info.do")
+    public ResponseResult<User> getInfo(HttpSession session) {
+        // 获取当前登陆的用户的id
+        Integer id = getUidFromSession(session);
+        // 执行查询，获取用户数据
+        User data = userService.getById(id);
+        // 返回结果
+        return new ResponseResult<User>(SUCCESS, data);
     }
 }
