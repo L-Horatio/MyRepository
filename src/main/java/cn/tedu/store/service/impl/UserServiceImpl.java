@@ -166,7 +166,7 @@ public class UserServiceImpl implements IUserService {
         // 执行更新头像
         String modifiedUser = data.getUsername();
         Date modifiedTime = new Date();
-        updateAvaar(avatar, modifiedUser, modifiedTime, uid);
+        updateAvatar(avatar, modifiedUser, modifiedTime, uid);
     }
 
     @Override
@@ -268,7 +268,7 @@ public class UserServiceImpl implements IUserService {
      * @param uid 用户id
      * @return 受影响的行数
      */
-    private void updateAvaar(String avatar, String modifiedUser, Date modifiedTime, Integer uid) {
+    private void updateAvatar(String avatar, String modifiedUser, Date modifiedTime, Integer uid) {
         Integer rows = userMapper.updateAvatar(uid, avatar, modifiedUser, modifiedTime);
         if (rows != 1) {
             throw new UpdateException("更新头像失败，出现未知错误！");

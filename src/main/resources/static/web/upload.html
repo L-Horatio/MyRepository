@@ -245,6 +245,13 @@
 		</footer>
 		<!--页脚结束-->
 		<script type="text/javascript">
+			$(document).ready(function () {
+				if ($.cookie("avatar") != null) {
+					console.log($.cookie("avatar"));
+					$("#img-avatar").attr("src","/" +  $.cookie("avatar"));
+				}
+			});
+
 			$("#btn-upload").click(function () {
 				var url = "../user/upload.do";
 				var data = new FormData($("#form-upload")[0]);
@@ -258,7 +265,10 @@
 					"success": function (json) {
 						if (json.state == 200) {
 							alert("成功！" + json.data)
-							$("#img-avatar").attr("src", "/" + json.data);
+							$("#img-avatar").attr("src","/" + json.data);
+							$.cookie("avatar", json.data, {
+								expires: 7
+							});
 						} else {
 							alert(json.message);
 						}
