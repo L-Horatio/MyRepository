@@ -148,17 +148,23 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label"><span class="txtred">*</span>省/直辖市：</label>
 									<div class="col-md-3">
-										<select class="form-control" data-province="---- 选择省 ----" id="provinces"></select>
+										<select name="province" class="form-control" data-province="---- 选择省 ----" id="provinces">
+											<option value="0">--- 请选择 ---</option>
+										</select>
 									</div>
 									<label class="col-md-2 control-label"><span class="txtred">*</span>城市：</label>
 									<div class="col-md-3">
-										<select class="form-control" data-city="---- 选择市 ----" id="receiverCity"></select>
+										<select name="city" class="form-control" data-city="---- 选择市 ----" id="cities">
+											<option value="0">--- 请选择 ---</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group ">
 									<label class="col-md-2 control-label"><span class="txtred">*</span>区县：</label>
 									<div class="col-md-3">
-										<select class="form-control" data-district="---- 选择区 ----" id="receiverDistrict"></select>
+										<select name="area" class="form-control" data-district="---- 选择区 ----" id="areas">
+											<option value="0">--- 请选择 ---</option>
+										</select>
 									</div>
 									<label class="col-md-2 control-label">邮政编码：</label>
 									<div class="col-md-3">
@@ -289,22 +295,93 @@
 
 			// 加载省的列表
 			function getProvinceList() {
+				// 清空当前列表
+				$("#provinces").empty();
+				// 添加默认选项
+				var op = '<option value="0">--- 请选择 ---</option>';
+				$("#provinces").append(op);
 				// 将请求提交到哪里
-				var url = "../district/list";
-				// 请求参数
-				var data = "parent=86";
+				var url = "../district/list/86";
 				// 发出ajax请求，并处理结果
 				$.ajax({
 					"url": url,
-					"data": data,
 					"type": "POST",
 					"dataType": "json",
 					"success": function (json) {
+						// 遍历加载新列表项
 						var list = json.data;
 						for (var i = 0; i < list.length; i ++) {
 							console.log(list[i].code + "-" + list[i].name);
-							var op = '<option value=" ' + list[i].code + ' "> ' + list[i].name + ' </option>';
+							var op = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
 							$("#provinces").append(op);
+						}
+					}
+				});
+			}
+
+			// 加载市的列表
+			function getCityList() {
+				// 清空当前列表
+				$("#cities").empty();
+				// 添加默认选项
+				var op = '<option value="0">--- 请选择 ---</option>';
+				$("#cities").append(op);
+				// 获取所选择的省
+				var code = $("#provinces").val();
+				console.log("code=" + code);
+				// 判断省的代号的值
+				if (code == 0) {
+					return;
+				}
+				// 将请求提交到哪里
+				var url = "../district/list/" + code;
+				console.log(url);
+				// 发出ajax请求，并处理结果
+				$.ajax({
+					"url": url,
+					"type": "POST",
+					"dataType": "json",
+					"success": function (json) {
+						// 遍历加载新列表项
+						var list = json.data;
+						for (var i = 0; i < list.length; i ++) {
+							console.log(list[i].code + "-" + list[i].name);
+							var op = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
+							$("#cities").append(op);
+						}
+					}
+				});
+			}
+
+			// 加载区的列表
+			function getAreaList() {
+				// 清空当前列表
+				$("#areas").empty();
+				// 添加默认选项
+				var op = '<option value="0">--- 请选择 ---</option>';
+				$("#areas").append(op);
+				// 获取所选择的市
+				var code = $("#cities").val().trim();
+				console.log("code=" + code);
+				// 判断市的代号的值
+				if (code == 0) {
+					return;
+				}
+				// 将请求提交到哪里
+				var url = "../district/list/" + code;
+				console.log(url);
+				// 发出ajax请求，并处理结果
+				$.ajax({
+					"url": url,
+					"type": "POST",
+					"dataType": "json",
+					"success": function (json) {
+						// 遍历加载新列表项
+						var list = json.data;
+						for (var i = 0; i < list.length; i ++) {
+							console.log(list[i].code + "-" + list[i].name);
+							var op = '<option value="' + list[i].code + '">' + list[i].name + '</option>';
+							$("#areas").append(op);
 						}
 					}
 				});
@@ -314,11 +391,36 @@
 			$(document).ready(function () {
 				// 加载省的列表
 				getProvinceList();
+
+				// 为省的列表绑定change事件
+				$("#provinces").change(function () {
+					// 加载市的列表
+					getCityList();
+				});
+
+				// 为市的列表绑定change事件
+				$("#cities").change(function () {
+					// 加载市的列表
+					getAreaList();
+				});
 			});
 
 
 			// 为提交按钮绑定单击事件
 			$("#btn-submit").click(function () {
+				// 检查提交的数据
+				/*if ($("#provinces").val() == 0) {
+					alert("错误！请选择省！")
+					return;
+				}
+				if ($("#cities").val() == 0) {
+					alert("错误！请选择市！")
+					return;
+				}
+				if ($("#areas").val() == 0) {
+					alert("错误！请选择区！")
+					return;
+				}*/
 				// 将请求提交到哪里
 				var url = "../address/create";
 				// 请求参数
