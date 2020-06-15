@@ -1,8 +1,10 @@
 package cn.tedu.store.service.impl;
 
 import cn.tedu.store.entity.Address;
+import cn.tedu.store.entity.District;
 import cn.tedu.store.mapper.AddressMapper;
 import cn.tedu.store.service.IAddressService;
+import cn.tedu.store.service.IDistrictService;
 import cn.tedu.store.service.exception.InsertException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,15 @@ import java.util.Date;
 @Service
 public class AddressServiceImpl implements IAddressService {
 
+    String provinceName = null;
+    String cityName = null;
+    String areaName = null;
+
     @Autowired
     private AddressMapper addressMapper;
+
+    @Autowired
+    private IDistrictService districtService;
 
     @Override
     public Address creat(String username, Address address) throws InsertException {
@@ -34,7 +43,9 @@ public class AddressServiceImpl implements IAddressService {
 //            address.setIsDefault(0);
 //        }
         address.setIsDefault(count == 0 ? 1 : 0);
-        // TODO 处理district
+        // 处理district；根据省/市/区的代号获取District的值
+        String district = getDistrict(address.getProvince(), address.getCity(), address.getArea());
+        address.setDistrict(district);
         // 封装日志
         Date now = new Date();
         address.setModifiedUser(username);
@@ -44,6 +55,32 @@ public class AddressServiceImpl implements IAddressService {
         // 执行创建新地址
         addnew(address);
         return address;
+    }
+
+    /**
+     * 根据省/市/区的代号获取名称
+     * @param province 省的代号
+     * @param city 市的代号
+     * @param area 区的代号
+     * @return 返回省/市/区的名称
+     */
+    private String getDistrict(String province, String city, String area) {
+        District p = districtService.getByCode(province);
+        District c = districtService.getByCode(city);
+        District a = districtService.getByCode(area);
+
+        if (p != null) {
+            provinceName = p.getName();
+        }
+
+        if (c != null) {
+            cityName = c.getName();
+        }
+
+        if (a != null) {
+            areaName = a.getName();
+        }
+        return provinceName + "," + cityName + "," + areaName;
     }
 
     /**

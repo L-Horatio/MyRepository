@@ -29,7 +29,10 @@ public class AddressServiceTestCase {
         Address address = new Address();
         address.setUid(21);
         address.setPhone("15496546598");
-        address.setName("小张同学");
+        address.setName("小马同学");
+        address.setProvince("610000");
+        address.setCity("610700");
+        address.setArea("610729");
         Address result = addressService.creat(username, address);
         System.err.println("result=" + result);
     }

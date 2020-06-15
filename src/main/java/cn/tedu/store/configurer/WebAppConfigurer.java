@@ -27,6 +27,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         List<String> pathPatterns = new ArrayList<>();
         pathPatterns.add("/user/**");
         pathPatterns.add("/web/**");
+        pathPatterns.add("/address/**");
 
         // 白名单
         List<String> excludePathPatterns = new ArrayList<>();
