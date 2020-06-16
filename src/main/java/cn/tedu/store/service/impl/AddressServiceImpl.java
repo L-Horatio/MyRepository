@@ -5,10 +5,13 @@ import cn.tedu.store.entity.District;
 import cn.tedu.store.mapper.AddressMapper;
 import cn.tedu.store.service.IAddressService;
 import cn.tedu.store.service.IDistrictService;
+import cn.tedu.store.service.exception.AccessDeniedException;
+import cn.tedu.store.service.exception.AddressNotFoundException;
 import cn.tedu.store.service.exception.InsertException;
 import cn.tedu.store.service.exception.UpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -60,8 +63,22 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
+    @Transactional
     public void setDefault(Integer uid, Integer id) {
+        // 根据id查询收货地址数据
+        Address data = findById(id);
+        // 判断数据是否为null
+        if (data == null) {
+            throw new AddressNotFoundException("设置默认收货地址失败，尝试访问的收货地址数据不存在！");
+        }
+        // 判断查询到到数据中的uid与参数uid是否一致
+        if (data.getUid() != uid) {
+            throw new AccessDeniedException("设置默认收货地址失败，访问数据权限不通过！");
+        }
+
+        // 将该用户的所有收货地址设置为非默认
         updateNonDefault(uid);
+        // 将制定id的收货地址设为默认
         updateDefault(id);
     }
 
@@ -147,5 +164,14 @@ public class AddressServiceImpl implements IAddressService {
      */
     private List<Address> findByUid(Integer uid) {
         return addressMapper.findByUid(uid);
+    }
+
+    /**
+     * 根据id查询收货地址数据
+     * @param id 收货地址的id
+     * @return 匹配的数据，没有则返回null
+     */
+    private Address findById(Integer id) {
+        return addressMapper.findById(id);
     }
 }

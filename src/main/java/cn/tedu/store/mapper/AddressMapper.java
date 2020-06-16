@@ -45,4 +45,11 @@ public interface AddressMapper {
      * @return 收货地址列表
      */
     List<Address> findByUid(Integer uid);
+
+    /**
+     * 根据id查询收货地址数据
+     * @param id 收货地址的id
+     * @return 匹配的数据，没有则返回null
+     */
+    Address findById(Integer id);
 }

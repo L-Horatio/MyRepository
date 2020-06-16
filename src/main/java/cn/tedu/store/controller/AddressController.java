@@ -5,9 +5,7 @@ import cn.tedu.store.service.IAddressService;
 import cn.tedu.store.util.ResponseResult;
 import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -38,8 +36,8 @@ public class AddressController extends BaseController{
         return new ResponseResult<>(SUCCESS);
     }
 
-    @PostMapping("/district")
-    public ResponseResult<Void> getDefault(HttpSession session, Integer id) {
+    @PostMapping("/default/{id}")
+    public ResponseResult<Void> getDefault(HttpSession session, @PathVariable("id") Integer id) {
         // 根据session获取uid
         Integer uid = getUidFromSession(session);
         addressService.setDefault(uid, id);

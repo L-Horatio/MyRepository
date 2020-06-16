@@ -66,4 +66,15 @@
             is_default DESC,
             modified_time DESC
     </select>
+
+    <!--根据id查询收货地址数据-->
+    <!--Address findById(Integer id);-->
+    <select id="findById" resultType="cn.tedu.store.entity.Address">
+        SELECT
+            uid
+        FROM
+            t_address
+        WHERE
+            id=#{id}
+    </select>
 </mapper>

@@ -35,6 +35,12 @@ public class BaseController {
         } else if (e instanceof PasswordNotMatchException) {
             // 402-PasswordNotMatchException密码不匹配异常
             state = 402;
+        } else if (e instanceof AddressNotFoundException) {
+            // 403-AddressNotFoundException收货地址数据不存在
+            state = 403;
+        } else if (e instanceof AccessDeniedException) {
+            // 404-AccessDeniedException访问权限不通过异常
+            state = 404;
         } else if (e instanceof InsertException) {
             // 500-InsertException插入数据异常
             state = 500;

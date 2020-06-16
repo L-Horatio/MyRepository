@@ -1,5 +1,6 @@
 package cn.tedu.store.service;
 
+import cn.tedu.store.entity.Address;
 import cn.tedu.store.entity.District;
 
 import java.util.List;

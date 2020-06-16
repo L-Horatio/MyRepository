@@ -41,8 +41,8 @@ public class AddressServiceTestCase {
     @Test
     public void setDefault() {
         try {
-            Integer uid = 7;
-            Integer id = 14;
+            Integer uid = 42;
+            Integer id = 12;
             addressService.setDefault(uid, id);
             System.err.println("OK!");
         } catch (ServiceException e) {

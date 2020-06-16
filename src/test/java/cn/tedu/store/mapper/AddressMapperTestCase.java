@@ -67,4 +67,10 @@ public class AddressMapperTestCase {
         System.err.println("END");
     }
 
+    @Test
+    public void findById() {
+        Integer id = 10;
+        Address address = addressMapper.findById(id);
+        System.err.println("address=" + address);
+    }
 }
