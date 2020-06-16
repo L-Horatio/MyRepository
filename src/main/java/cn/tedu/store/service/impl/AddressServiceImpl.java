@@ -6,10 +6,12 @@ import cn.tedu.store.mapper.AddressMapper;
 import cn.tedu.store.service.IAddressService;
 import cn.tedu.store.service.IDistrictService;
 import cn.tedu.store.service.exception.InsertException;
+import cn.tedu.store.service.exception.UpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author L-Horatio
@@ -57,6 +59,17 @@ public class AddressServiceImpl implements IAddressService {
         return address;
     }
 
+    @Override
+    public void setDefault(Integer uid, Integer id) {
+        updateNonDefault(uid);
+        updateDefault(id);
+    }
+
+    @Override
+    public List<Address> getListByUid(Integer uid) {
+        return findByUid(uid);
+    }
+
     /**
      * 根据省/市/区的代号获取名称
      * @param province 省的代号
@@ -95,11 +108,44 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     /**
+     * 将某用户的收货地址全部设置为非默认
+     * @param uid 用户的id
+     * @return 受影响的行数
+     */
+    private void updateNonDefault(Integer uid) {
+        Integer rows = addressMapper.updateNonDefault(uid);
+        if (rows < 1) {
+            throw new UpdateException("修改默认地址失败，出现未知错误！");
+        }
+    }
+
+    /**
+     * 将指定id的收货地址设置为默认
+     * @param id 收货地址数据的id
+     * @return 受影响的行数
+     */
+    private void updateDefault(Integer id) {
+        Integer rows = addressMapper.updateDefault(id);
+        if (rows != 1) {
+            throw new UpdateException("修改默认地址失败，出现未知错误！");
+        }
+    }
+
+    /**
      * 根据uid查询收货地址的数量
      * @param uid 用户id
      * @return 收货地址的数量，如果没有数据，返回0
      */
     private Integer getCountByUid(Integer uid) {
         return addressMapper.getCountByUid(uid);
+    }
+
+    /**
+     * 根据uid查询某用户的收货地址
+     * @param uid 用户的id
+     * @return 收货地址
+     */
+    private List<Address> findByUid(Integer uid) {
+        return addressMapper.findByUid(uid);
     }
 }

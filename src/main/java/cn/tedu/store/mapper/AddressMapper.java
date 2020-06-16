@@ -2,6 +2,8 @@ package cn.tedu.store.mapper;
 
 import cn.tedu.store.entity.Address;
 
+import java.util.List;
+
 /**
  * @author L-Horatio
  * @date 2020/6/14
@@ -17,9 +19,30 @@ public interface AddressMapper {
     Integer addnew(Address address);
 
     /**
+     * 将某用户的收货地址全部设置为非默认
+     * @param uid 用户的id
+     * @return 受影响的行数
+     */
+    Integer updateNonDefault(Integer uid);
+
+    /**
+     * 将指定id的收货地址设置为默认
+     * @param id 收货地址数据的id
+     * @return 受影响的行数
+     */
+    Integer updateDefault(Integer id);
+
+    /**
      * 根据uid查询收货地址的数量
      * @param uid 用户id
      * @return 收货地址的数量，如果没有数据，返回0
      */
     Integer getCountByUid(Integer uid);
+
+    /**
+     * 获取某用户的收货地址列表
+     * @param uid 用户的id
+     * @return 收货地址列表
+     */
+    List<Address> findByUid(Integer uid);
 }

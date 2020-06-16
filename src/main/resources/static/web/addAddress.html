@@ -168,7 +168,7 @@
 									</div>
 									<label class="col-md-2 control-label">邮政编码：</label>
 									<div class="col-md-3">
-										<input name="zip" type="text" class="form-control" placeholder="请输入邮政编码">
+										<input name="zip" type="text" class="form-control" placeholder="请输入邮政编码" maxlength="6">
 									</div>
 								</div>
 							</div>
@@ -328,14 +328,12 @@
 				$("#cities").append(op);
 				// 获取所选择的省
 				var code = $("#provinces").val();
-				console.log("code=" + code);
 				// 判断省的代号的值
 				if (code == 0) {
 					return;
 				}
 				// 将请求提交到哪里
 				var url = "../district/list/" + code;
-				console.log(url);
 				// 发出ajax请求，并处理结果
 				$.ajax({
 					"url": url,
@@ -361,15 +359,13 @@
 				var op = '<option value="0">--- 请选择 ---</option>';
 				$("#areas").append(op);
 				// 获取所选择的市
-				var code = $("#cities").val().trim();
-				console.log("code=" + code);
+				var code = $("#cities").val();
 				// 判断市的代号的值
 				if (code == 0) {
 					return;
 				}
 				// 将请求提交到哪里
 				var url = "../district/list/" + code;
-				console.log(url);
 				// 发出ajax请求，并处理结果
 				$.ajax({
 					"url": url,
@@ -396,6 +392,11 @@
 				$("#provinces").change(function () {
 					// 加载市的列表
 					getCityList();
+					// 清空区列表
+					$("#areas").empty();
+					// 添加默认选项
+					var op = '<option value="0">--- 请选择 ---</option>';
+					$("#areas").append(op);
 				});
 
 				// 为市的列表绑定change事件
@@ -409,7 +410,7 @@
 			// 为提交按钮绑定单击事件
 			$("#btn-submit").click(function () {
 				// 检查提交的数据
-				/*if ($("#provinces").val() == 0) {
+				if ($("#provinces").val() == 0) {
 					alert("错误！请选择省！")
 					return;
 				}
@@ -420,7 +421,7 @@
 				if ($("#areas").val() == 0) {
 					alert("错误！请选择区！")
 					return;
-				}*/
+				}
 				// 将请求提交到哪里
 				var url = "../address/create";
 				// 请求参数

@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author L-Horatio
@@ -35,9 +36,35 @@ public class AddressMapperTestCase {
     }
 
     @Test
+    public void updateNonDefault() {
+        Integer uid = 7;
+        Integer rows = addressMapper.updateNonDefault(uid);
+        System.err.println("rows=" + rows);
+    }
+
+    @Test
+    public void updateDefault() {
+        Integer id = 15;
+        Integer rows = addressMapper.updateDefault(id);
+        System.err.println("rows=" + rows);
+    }
+
+    @Test
     public void getCountByUid(){
         Integer uid = 2;
         Integer count = addressMapper.getCountByUid(uid);
         System.err.println("count=" + count);
     }
+
+    @Test
+    public void findByUid() {
+        Integer uid = 7;
+        List<Address> list = addressMapper.findByUid(uid);
+        System.err.println("BEGIN");
+        for (Address address : list) {
+            System.err.println(address);
+        }
+        System.err.println("END");
+    }
+
 }
