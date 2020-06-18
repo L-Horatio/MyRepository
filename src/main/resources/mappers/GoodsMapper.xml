@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.store.mapper.GoodsMapper">
+
+    <!--根据商品分类查询商品列表-->
+    <!--List<Goods> findByCategory(@Param("categoryId") Long categoryId, @Param("offset") Integer offset, @Param("count") Integer count);-->
+    <select id="findByCategory" resultType="cn.tedu.store.entity.Goods">
+        SELECT
+            id, title,
+            price, image,
+            sell_point sellPoint
+        FROM
+            t_goods
+        WHERE
+            category_id=#{categoryId}
+        ORDER BY
+            priority DESC
+        LIMIT
+            #{offset}, #{count}
+    </select>
+</mapper>
