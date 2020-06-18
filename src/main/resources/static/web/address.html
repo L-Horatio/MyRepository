@@ -274,6 +274,29 @@
 				showList();
 			});
 
+			function deleteById(id) {
+				var url = "../address/delete/" + id;
+				console.log(url);
+				$.ajax({
+					"url": url,
+					"type": "POST",
+					"dataType": "json",
+					"success": function (json) {
+						if (json.state == 200) {
+							// 成功
+							showList();
+						} else {
+							// 失败
+							alert(json.message);
+						}
+					},
+					"error": function () {
+						alert("您的登录信息已经过期，请重新登录！");
+						location.href = "login.html";
+					}
+				});
+			}
+
 			function setDefault(id) {
 				var url = "../address/default/" + id;
 				$.ajax({
@@ -313,11 +336,11 @@
 									'\t\t\t\t\t\t\t\t\t<td>#{district},#{address}</td>\n' +
 									'\t\t\t\t\t\t\t\t\t<td>#{phone}</td>\n' +
 									'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>\n' +
-									'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>\n' +
+									'\t\t\t\t\t\t\t\t\t<td><a class="btn btn-xs add-del btn-info" href="javascript:deleteById(#{id});"><span class="fa fa-trash-o"></span> 删除</a></td>\n' +
 									'\t\t\t\t\t\t\t\t\t<td><a #{is_default} class="btn btn-xs add-def btn-default" href="javascript:setDefault(#{id});">设为默认</a></td>\n' +
 									'\t\t\t\t\t\t\t\t</tr>';
 
-							html = html.replace("#{id}", list[i].id);
+							html = html.replace(/#{id}/g, list[i].id);
 							html = html.replace("#{name}", list[i].name);
 							html = html.replace("#{tag}", list[i].tag);
 							html = html.replace("#{district}", list[i].district);

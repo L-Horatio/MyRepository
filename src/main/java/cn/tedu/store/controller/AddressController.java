@@ -40,7 +40,9 @@ public class AddressController extends BaseController{
     public ResponseResult<Void> getDefault(HttpSession session, @PathVariable("id") Integer id) {
         // 根据session获取uid
         Integer uid = getUidFromSession(session);
+        // 调用业务层方法执行设置
         addressService.setDefault(uid, id);
+        // 返回
         return new ResponseResult<>(SUCCESS);
     }
 
@@ -52,5 +54,15 @@ public class AddressController extends BaseController{
         List<Address> list = addressService.getListByUid(uid);
         // 返回
         return new ResponseResult<List<Address>>(SUCCESS, list);
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseResult<Void> deleteById(HttpSession session, @PathVariable("id") Integer id) {
+        // 根据session获取uid
+        Integer uid = getUidFromSession(session);
+        // 调用业务层方法执行设置
+        addressService.delete(uid, id);
+        // 返回
+        return new ResponseResult<>(SUCCESS);
     }
 }

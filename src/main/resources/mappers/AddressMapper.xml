@@ -71,7 +71,7 @@
     <!--Address findById(Integer id);-->
     <select id="findById" resultType="cn.tedu.store.entity.Address">
         SELECT
-            uid
+            uid, is_default isDefault
         FROM
             t_address
         WHERE

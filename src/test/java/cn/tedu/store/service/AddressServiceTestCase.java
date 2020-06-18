@@ -1,7 +1,6 @@
 package cn.tedu.store.service;
 
 import cn.tedu.store.entity.Address;
-import cn.tedu.store.entity.User;
 import cn.tedu.store.service.exception.ServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,8 +39,8 @@ public class AddressServiceTestCase {
     @Test
     public void setDefault() {
         try {
-            Integer uid = 42;
-            Integer id = 12;
+            Integer uid = 7;
+            Integer id = 14;
             addressService.setDefault(uid, id);
             System.err.println("OK!");
         } catch (ServiceException e) {
@@ -63,11 +61,11 @@ public class AddressServiceTestCase {
     }
 
     @Test
-    public void deleteDefault() {
+    public void delete() {
         try {
-            Integer uid = 42;
-            Integer id = 11;
-            addressService.deleteDefault(uid, id);
+            Integer uid = 7;
+            Integer id = 14;
+            addressService.delete(uid, id);
             System.err.println("OK!");
         } catch (ServiceException e) {
             System.err.println("错误类型：" + e.getClass().toString());

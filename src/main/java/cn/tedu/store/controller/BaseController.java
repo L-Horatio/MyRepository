@@ -47,6 +47,9 @@ public class BaseController {
         } else if (e instanceof UpdateException) {
             // 501-UpdateException更新数据异常
             state = 501;
+        } else if (e instanceof DeleteException) {
+            // 502-DeleteException删除收货地址异常
+            state = 502;
         } else if (e instanceof FileEmptyException) {
             // 600-FileEmptyException上传文件为空异常
             state = 600;

@@ -48,5 +48,5 @@ public interface IAddressService {
      * @throws UpdateException
      * @throws DeleteException
      */
-    void deleteDefault(Integer uid, Integer id) throws DeleteException;
+    void delete(Integer uid, Integer id) throws DeleteException;
 }

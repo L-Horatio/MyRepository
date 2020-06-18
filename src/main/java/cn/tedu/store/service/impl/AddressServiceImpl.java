@@ -86,7 +86,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     @Transactional
-    public void deleteDefault(Integer uid, Integer id) throws DeleteException {
+    public void delete(Integer uid, Integer id) throws DeleteException {
         // 根据id查询收货地址数据
         Address data = findById(id);
         // 判断是否为null
@@ -216,7 +216,7 @@ public class AddressServiceImpl implements IAddressService {
      */
     private void deleteById(Integer id) {
         Integer rows = addressMapper.deleteById(id);
-        if (rows == 1) {
+        if (rows != 1) {
             throw new DeleteException("删除数据失败，出现未知错误！");
         }
     }
