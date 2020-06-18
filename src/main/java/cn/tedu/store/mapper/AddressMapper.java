@@ -52,4 +52,18 @@ public interface AddressMapper {
      * @return 匹配的数据，没有则返回null
      */
     Address findById(Integer id);
+
+    /**
+     * 根据uid查询出最后一条修改数据
+     * @param uid 用户id
+     * @return 匹配非数据，没有则返回null
+     */
+    Address findLastModified(Integer uid);
+
+    /**
+     * 根据收货地址的id删除数据
+     * @param id 收货地址的id
+     * @return 受影响的行数
+     */
+    Integer deleteById(Integer id);
 }

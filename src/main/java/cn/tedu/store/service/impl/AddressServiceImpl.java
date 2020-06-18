@@ -5,10 +5,7 @@ import cn.tedu.store.entity.District;
 import cn.tedu.store.mapper.AddressMapper;
 import cn.tedu.store.service.IAddressService;
 import cn.tedu.store.service.IDistrictService;
-import cn.tedu.store.service.exception.AccessDeniedException;
-import cn.tedu.store.service.exception.AddressNotFoundException;
-import cn.tedu.store.service.exception.InsertException;
-import cn.tedu.store.service.exception.UpdateException;
+import cn.tedu.store.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,6 +82,35 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getListByUid(Integer uid) {
         return findByUid(uid);
+    }
+
+    @Override
+    @Transactional
+    public void deleteDefault(Integer uid, Integer id) throws DeleteException {
+        // 根据id查询收货地址数据
+        Address data = findById(id);
+        // 判断是否为null
+        if (data == null) {
+            //是：抛出异常AddressNotFoundException
+            throw new AddressNotFoundException("删除失败，删除的数据不存在！");
+        }
+        // 检查数据归属是否有误
+        if (data.getUid() != uid) {
+            // 是：抛出异常
+            throw new AccessDeniedException("删除失败，访问权限不通过！");
+        }
+        // 执行删除
+        deleteById(id);
+        // 检查删除后是否还有收货地址
+        //Integer count = addressMapper.getCountByUid(uid);
+        if (getCountByUid(uid) > 0) {
+            // 是：判断刚才删除的收货地址是否为默认
+            if (data.getIsDefault() == 1) {
+                // --是：查询出最后修改的收货地址为默认
+                Integer lastModifiedId = findLastModified(uid).getId();
+                setDefault(uid, lastModifiedId);
+            }
+        }
     }
 
     /**
@@ -173,5 +199,25 @@ public class AddressServiceImpl implements IAddressService {
      */
     private Address findById(Integer id) {
         return addressMapper.findById(id);
+    }
+
+    /**
+     * 根据uid查询出最后一条修改数据
+     * @param uid 用户id
+     * @return 匹配非数据，没有则返回null
+     */
+    private Address findLastModified(Integer uid) {
+        return addressMapper.findLastModified(uid);
+    }
+
+    /**
+     * 根据收货地址的id删除数据
+     * @param id 收货地址的id
+     */
+    private void deleteById(Integer id) {
+        Integer rows = addressMapper.deleteById(id);
+        if (rows == 1) {
+            throw new DeleteException("删除数据失败，出现未知错误！");
+        }
     }
 }

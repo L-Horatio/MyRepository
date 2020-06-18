@@ -49,7 +49,6 @@ public class AddressServiceTestCase {
             System.err.println("错误类型：" + e.getClass().toString());
             System.err.println("错误描述：" + e.getMessage());
         }
-
     }
 
     @Test
@@ -61,5 +60,18 @@ public class AddressServiceTestCase {
             System.err.println(address);
         }
         System.err.println("END");
+    }
+
+    @Test
+    public void deleteDefault() {
+        try {
+            Integer uid = 42;
+            Integer id = 11;
+            addressService.deleteDefault(uid, id);
+            System.err.println("OK!");
+        } catch (ServiceException e) {
+            System.err.println("错误类型：" + e.getClass().toString());
+            System.err.println("错误描述：" + e.getMessage());
+        }
     }
 }

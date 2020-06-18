@@ -77,4 +77,25 @@
         WHERE
             id=#{id}
     </select>
+
+    <!--根据uid查询出最后一条修改数据-->
+    <!--Integer findLastModified(Integer uid);-->
+    <select id="findLastModified" resultType="cn.tedu.store.entity.Address">
+        SELECT
+            id
+        FROM
+            t_address
+        WHERE
+            uid=#{uid}
+        ORDER BY
+            modified_time DESC
+        LIMIT
+            0,1
+    </select>
+
+    <!--根据收货地址的id删除数据-->
+    <!--Integer deleteById(Integer id);-->
+    <delete id="deleteById">
+        DELETE FROM t_address WHERE id=#{id}
+    </delete>
 </mapper>

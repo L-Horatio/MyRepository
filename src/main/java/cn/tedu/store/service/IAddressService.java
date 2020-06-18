@@ -1,6 +1,7 @@
 package cn.tedu.store.service;
 
 import cn.tedu.store.entity.Address;
+import cn.tedu.store.service.exception.DeleteException;
 import cn.tedu.store.service.exception.InsertException;
 import cn.tedu.store.service.exception.UpdateException;
 
@@ -39,4 +40,13 @@ public interface IAddressService {
      * @return 收货地址列表
      */
     List<Address> getListByUid(Integer uid);
+
+    /**
+     * 删除收货地址
+     * @param uid 用户id
+     * @param id 收货地址的id
+     * @throws UpdateException
+     * @throws DeleteException
+     */
+    void deleteDefault(Integer uid, Integer id) throws DeleteException;
 }
