@@ -28,6 +28,16 @@ public class GoodsServiceImpl implements IGoodsService {
         return findByCategory(categoryId, offset, count);
     }
 
+    @Override
+    public Goods getById(Long id) {
+        return findById(id);
+    }
+
+    @Override
+    public List<Goods> getByPriority(Integer count) {
+        return findByPriority(count);
+    }
+
     /**
      * 根据商品分类查询商品列表
      * @param categoryId 商品分类的id
@@ -39,5 +49,21 @@ public class GoodsServiceImpl implements IGoodsService {
         return goodsMapper.findByCategory(categoryId, offset, count);
     }
 
+    /**
+     * 根据id查询商品详情
+     * @param id 商品的id
+     * @return 商品详情，如果没有匹配数据，返回Null
+     */
+    private Goods findById(Long id) {
+        return goodsMapper.findById(id);
+    }
 
+    /**
+     * 根据优先级获取商品数据的列表
+     * @param count 获取商品的数量
+     * @return 优先级最高的几个商品数据的列表
+     */
+    private List<Goods> findByPriority(Integer count) {
+        return goodsMapper.findByPriority(count);
+    }
 }

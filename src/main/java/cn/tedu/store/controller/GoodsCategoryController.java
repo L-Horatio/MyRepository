@@ -17,7 +17,7 @@ import java.util.List;
  * @time 22:54
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categorycategory")
 public class GoodsCategoryController extends BaseController{
 
     @Autowired

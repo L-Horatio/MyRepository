@@ -19,4 +19,36 @@
         LIMIT
             #{offset}, #{count}
     </select>
+
+    <!--根据id查询商品详情-->
+    <!--Goods findById(Long id);-->
+    <select id="findById" resultType="cn.tedu.store.entity.Goods">
+        SELECT
+            id, barcode,
+            category_id categoryId,
+            item_type itemType,
+            title, image,
+            sell_point sellPoint,
+            price, num,
+            status, priority
+        FROM
+            t_goods
+        WHERE
+            id=#{id}
+    </select>
+
+    <!--根据优先级获取商品数据的列表-->
+    <!--List<Goods> findByPriority(Integer id);-->
+    <select id="findByPriority" resultType="cn.tedu.store.entity.Goods">
+        SELECT
+            id, title, price, image
+        FROM
+            t_goods
+        WHERE
+            status=1 AND num>0
+        ORDER BY
+            priority DESC
+        LIMIT
+            0, #{count}
+    </select>
 </mapper>

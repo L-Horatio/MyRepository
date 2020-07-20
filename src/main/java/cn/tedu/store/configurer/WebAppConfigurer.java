@@ -35,6 +35,7 @@ public class WebAppConfigurer implements WebMvcConfigurer {
         excludePathPatterns.add("/user/login.do");
         excludePathPatterns.add("/web/register.html");
         excludePathPatterns.add("/web/login.html");
+        excludePathPatterns.add("/web/index.html");
 
         // 注册
         registry.addInterceptor(new LoginInterceptor())

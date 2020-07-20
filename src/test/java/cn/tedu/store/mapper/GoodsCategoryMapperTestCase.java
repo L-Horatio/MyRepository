@@ -24,7 +24,7 @@ public class GoodsCategoryMapperTestCase {
     
     @Test
     public void findByParent() {
-        Long parentId = 0L;
+        Long parentId = 161L;
         List<GoodsCategory> categories = categoryMapper.findByParent(parentId);
         System.err.println("BEGIN");
         for (GoodsCategory category : categories) {

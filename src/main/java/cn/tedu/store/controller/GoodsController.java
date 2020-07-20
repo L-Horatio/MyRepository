@@ -30,4 +30,16 @@ public class GoodsController extends BaseController{
         List<Goods> list = goodsService.getByCategory(categoryId, 0, 20);
         return new ResponseResult<List<Goods>>(SUCCESS, list);
     }
+
+    @GetMapping("/details/{id}")
+    public ResponseResult<Goods> getById(@PathVariable("id") Long id) {
+        Goods goods = goodsService.getById(id);
+        return new ResponseResult<Goods>(SUCCESS, goods);
+    }
+
+    @GetMapping("/hot")
+    public ResponseResult<List<Goods>> getHotGoods() {
+        List<Goods> list = goodsService.getByPriority(4);
+        return new ResponseResult<List<Goods>>(SUCCESS, list);
+    }
 }

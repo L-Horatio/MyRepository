@@ -35,4 +35,21 @@ public class GoodsMapperTestCase {
         System.err.println("END");
     }
 
+    @Test
+    public void findById() {
+        Long id = 10000022L;
+        Goods data = goodsMapper.findById(id);
+        System.err.println(data);
+    }
+
+    @Test
+    public void findByPriority() {
+        Integer count = 4;
+        List<Goods> list = goodsMapper.findByPriority(count);
+        System.err.println("BEGIN");
+        for (Goods data : list) {
+            System.err.println(data);
+        }
+        System.err.println("END");
+    }
 }

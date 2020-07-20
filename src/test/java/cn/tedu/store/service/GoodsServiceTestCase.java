@@ -26,11 +26,29 @@ public class GoodsServiceTestCase {
     public void getByCategory() {
         Long categoryId = 163L;
         Integer offset = 0;
-        Integer count = 20;
+        Integer count = 10;
         List<Goods> list = service.getByCategory(categoryId, offset, count);
         System.err.println("BEGIN");
         for (Goods goods : list) {
             System.err.println(goods);
+        }
+        System.err.println("END");
+    }
+    
+    @Test
+    public void getBiId() {
+        Long id = 10000022L;
+        Goods data = service.getById(id);
+        System.err.println(data);
+    }
+
+    @Test
+    public void getByPriority() {
+        Integer count = 4;
+        List<Goods> list = service.getByPriority(count);
+        System.err.println("BEGIN");
+        for (Goods data : list) {
+            System.err.println(data);
         }
         System.err.println("END");
     }

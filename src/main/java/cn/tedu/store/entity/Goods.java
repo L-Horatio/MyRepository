@@ -11,13 +11,13 @@ package cn.tedu.store.entity;
  */
 public class Goods extends BaseEntity{
 
-    private static final long serialVersionUID = -273690236827818669L;
+    private static final long serialVersionUID = 8369729853872288207L;
 
     private Long id;
-    private Long category_id;
-    private String item_type;
+    private Long categoryId;
+    private String itemType;
     private String title;
-    private String sell_point;
+    private String sellPoint;
     private Long price;
     private Integer num;
     private String barcode;
@@ -33,20 +33,20 @@ public class Goods extends BaseEntity{
         this.id = id;
     }
 
-    public Long getCategory_id() {
-        return category_id;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getItem_type() {
-        return item_type;
+    public String getItemType() {
+        return itemType;
     }
 
-    public void setItem_type(String item_type) {
-        this.item_type = item_type;
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
     public String getTitle() {
@@ -57,12 +57,12 @@ public class Goods extends BaseEntity{
         this.title = title;
     }
 
-    public String getSell_point() {
-        return sell_point;
+    public String getSellPoint() {
+        return sellPoint;
     }
 
-    public void setSell_point(String sell_point) {
-        this.sell_point = sell_point;
+    public void setSellPoint(String sellPoint) {
+        this.sellPoint = sellPoint;
     }
 
     public Long getPrice() {
@@ -117,10 +117,10 @@ public class Goods extends BaseEntity{
     public String toString() {
         return "Goods{" +
                 "id=" + id +
-                ", category_id=" + category_id +
-                ", item_type='" + item_type + '\'' +
+                ", categoryId=" + categoryId +
+                ", itemType='" + itemType + '\'' +
                 ", title='" + title + '\'' +
-                ", sell_point='" + sell_point + '\'' +
+                ", sellPoint='" + sellPoint + '\'' +
                 ", price=" + price +
                 ", num=" + num +
                 ", barcode='" + barcode + '\'' +
